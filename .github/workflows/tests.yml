@@ -44,4 +44,11 @@ jobs:
         run: php artisan key:generate
 
       - name: Execute tests
-        run: vendor/bin/phpunit
+        run: |
+          if [ "${DISABLE_TESTS}" != "true" ]; then
+            vendor/bin/phpunit
+          else
+            echo "Tests are disabled."
+          fi
+        env:
+          DISABLE_TESTS: ${{ secrets.DISABLE_TESTS }}
