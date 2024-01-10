@@ -22,8 +22,8 @@ class InvoiceFactory extends Factory
             'date' => $this->faker->date,
             'due_date' => $this->faker->date,
             'reference' => 'REF-'.rand(10, 500),
-            'terms and conditions' => $this->faker->paragraph(2),
-            'subtotal' => $this->faker->numberBetween(10, 1000),
+            'terms_and_conditions' => $this->faker->paragraph(2),
+            'sub_total' => $this->faker->numberBetween(10, 1000),
             'discount' => $this->faker->numberBetween(10, 1000),
             'total' => $this->faker->numberBetween(20, 1000),
         ];
