@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
