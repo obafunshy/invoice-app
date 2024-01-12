@@ -1,6 +1,9 @@
 <script setup>
-    import {onMounted, ref} from "vue"
-import router from "../../router";
+    import axios from "axios";
+    import {onMounted, ref} from "vue";
+    import { useRouter } from "vue-router";
+
+    const router = useRouter()
 
     let form = ref([])
     let allcustomers = ref([])
@@ -98,10 +101,6 @@ import router from "../../router";
         }
     }
 
-    const onShow = (id) => {
-        router.push('/invoice/show' + id)
-    }
-    
 </script>
 <template>
     <div class="container">
