@@ -106,7 +106,7 @@
             formData.append('number', form.value.number)
             formData.append('reference', form.value.reference)
             formData.append('discount', form.value.discount)
-            formData.append('subtotal', subtotal)
+            formData.append('sub_total', subtotal)
             formData.append('total', total)
             formData.append('terms_and_conditions', form.value.terms_and_conditions)
 
@@ -122,6 +122,16 @@
         <div class="invoices">
             <div class="card__header">
                 <div>
+                    <ul>
+                        <li>
+                            <!-- Select Btn Option -->
+                            <button class="selectBtnFlat" @click="$router.push('/')">
+                                <i class="fas fa-print"></i>
+                                Back Home
+                            </button>
+                            <!-- End Select Btn Option -->
+                        </li>
+                    </ul>
                     <h2 class="invoice__title">Edit Invoice</h2>
                 </div>
                 <div>

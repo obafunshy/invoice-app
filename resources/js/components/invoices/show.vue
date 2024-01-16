@@ -61,6 +61,14 @@
                     <ul  class="card__header-list">
                         <li>
                             <!-- Select Btn Option -->
+                            <button class="selectBtnFlat" @click="$router.push('/')">
+                                <i class="fas fa-print"></i>
+                                Home
+                            </button>
+                            <!-- End Select Btn Option -->
+                        </li>
+                        <li>
+                            <!-- Select Btn Option -->
                             <button class="selectBtnFlat" @click="print()">
                                 <i class="fas fa-print"></i>
                                 Print
