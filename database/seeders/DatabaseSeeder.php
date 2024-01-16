@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Counter;
-use App\Models\Invoice;
-use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

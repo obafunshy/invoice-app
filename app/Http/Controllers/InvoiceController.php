@@ -2,38 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InvoiceRequest;
 use App\Models\Counter;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\InvoiceRequest;
 use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends Controller
 {
-    public function get_all_invoice() {
+    public function get_all_invoice()
+    {
         $invoices = Invoice::with('customer')->orderBy('id', 'DESC')->get();
+
         return response()->json([
-            'invoices' => $invoices
+            'invoices' => $invoices,
         ], 200);
     }
 
-    public function search_invoice(Request $request) {
+    public function search_invoice(Request $request)
+    {
         $search = $request->get('s');
 
         $invoices = Invoice::with('customer')
-        ->when($search, function ($query) use ($search) {
-            return $query->where('id', 'LIKE', "%$search%");
-        })
-        ->get();
+            ->when($search, function ($query) use ($search) {
+                return $query->where('id', 'LIKE', "%$search%");
+            })
+            ->get();
 
-         return response()->json(['invoices' => $invoices], 200);
+        return response()->json(['invoices' => $invoices], 200);
     }
 
-    public function create_invoice() {
+    public function create_invoice()
+    {
         $counter = Counter::where('key', 'invoice')->first();
-        if (!$counter) {
+        if (! $counter) {
             throw ValidationException::withMessages(['error' => 'Counter data not found']);
         }
 
@@ -54,25 +57,25 @@ class InvoiceController extends Controller
                 'product' => null,
                 'unit_price' => 0,
                 'quantity' => 1,
-            ]
-            ];
-            return response()->json($formData);
+            ],
+        ];
+
+        return response()->json($formData);
     }
 
-
-
-    public function add_invoice(InvoiceRequest $request) {
+    public function add_invoice(InvoiceRequest $request)
+    {
         $invoiceData = $request->only([
             'sub_total', 'total', 'customer_id', 'number', 'date', 'due_date',
-            'discount', 'reference', 'terms_and_conditions'
+            'discount', 'reference', 'terms_and_conditions',
         ]);
 
         $invoice = Invoice::create($invoiceData);
 
-        $invoiceItems = json_decode($request->input("invoice_item"));
+        $invoiceItems = json_decode($request->input('invoice_item'));
 
-            if($invoiceItems) {
-                foreach ($invoiceItems as $item) {
+        if ($invoiceItems) {
+            foreach ($invoiceItems as $item) {
                 $itemdata['product_id'] = $item->id;
                 $itemdata['invoice_id'] = $invoice->id;
                 $itemdata['quantity'] = $item->quantity;
@@ -83,26 +86,32 @@ class InvoiceController extends Controller
         }
     }
 
-    public function show_invoice($id) {
+    public function show_invoice($id)
+    {
         $invoice = Invoice::with('customer', 'invoice_items.product')->findOrFail($id);
+
         return response()->json([
-            'invoice' => $invoice
+            'invoice' => $invoice,
         ], 200);
     }
 
-    public function edit_invoice($id) {
+    public function edit_invoice($id)
+    {
         $invoice = Invoice::with('customer', 'invoice_items.product')->findOrFail($id);
+
         return response()->json([
-            'invoice' => $invoice
+            'invoice' => $invoice,
         ], 200);
     }
 
-    public function delete_invoice_items($id) {
+    public function delete_invoice_items($id)
+    {
         $invoiceitem = InvoiceItem::findOrFail($id);
         $invoiceitem->delete();
     }
 
-    public function update_invoice(InvoiceRequest $request, $id) {
+    public function update_invoice(InvoiceRequest $request, $id)
+    {
         $invoice = Invoice::findOrFail($id);
 
         $invoice->update($request->only([
@@ -110,7 +119,7 @@ class InvoiceController extends Controller
             'discount', 'reference', 'terms_and_conditions',
         ]));
 
-        $invoiceItems = json_decode($request->input("invoice_item"));
+        $invoiceItems = json_decode($request->input('invoice_item'));
 
         $invoice->invoice_items()->delete();
 
@@ -126,7 +135,8 @@ class InvoiceController extends Controller
         }
     }
 
-    public function delete_invoice($id) {
+    public function delete_invoice($id)
+    {
         $invoice = Invoice::findOrFail($id);
         $invoice->invoice_items()->delete();
         $invoice->delete();

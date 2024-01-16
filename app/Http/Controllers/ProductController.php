@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use App\Models\Product;
-use App\Models\InvoiceItem;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    public function all_product() {
+    public function all_product()
+    {
         $products = Product::orderBy('id', 'DESC')->get();
+
         return response()->json([
             'products' => $products,
         ], 200);

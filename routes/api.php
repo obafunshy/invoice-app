@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CustomerController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +32,3 @@ Route::get('/edit_invoice/{id}', [InvoiceController::class, 'edit_invoice']);
 Route::get('/delete_invoice_items/{id}', [InvoiceController::class, 'delete_invoice_items']);
 Route::post('/update_invoice/{id}', [InvoiceController::class, 'update_invoice']);
 Route::get('/delete_invoice/{id}', [InvoiceController::class, 'delete_invoice']);
-
